@@ -141,6 +141,7 @@ namespace TextRPG
             Console.WriteLine(" 계속하려면 아무키나 누르세요 ");
             Console.ReadKey();
         }
+
         static void PrintGetState()
         {
             Console.WriteLine("캐릭터 스텟이 정해지는 중입니다.\n");
@@ -181,7 +182,7 @@ namespace TextRPG
             Console.WriteLine("주위를 둘러보니 멀리 마을 하나가 보입니다.");
             Console.WriteLine("당신은 언덕에서 내려와 아까 보였던 마을을 향해 걸어갑니다.");
 
-            Wait(10);
+            Wait(8);
         }
 
         static void PrintStreet()
@@ -217,6 +218,7 @@ namespace TextRPG
 
         }
 
+        #region 캐릭터 등록
         static void SelectScene()
         {
             Console.Write("캐릭터 이름을 정하시오 : ");
@@ -228,7 +230,6 @@ namespace TextRPG
             }
             data.scene = Scene.Confirm;
         }
-
         static void RandomGetStets(out int _str, out int _dex, out int _int, out int _luk)
         {
             Random rand = new Random();
@@ -238,14 +239,13 @@ namespace TextRPG
             _int = rand.Next(4, 13);
             _luk = rand.Next(4, 13);
         }
-
         static void ConfirmScene()
         {
             PrintGetState();
             PrintState();
 
             Console.WriteLine("이대로 플레이 하시겠습니까?\n");
-            Console.WriteLine("Y - 이대로 플레이 / N - 스텟을 다시 돌린다.");
+            Console.WriteLine("Y - 이대로 플레이 / N - 스텟을 다시 돌린다. / 그외 - 처음으로");
             Console.WriteLine("-----------------------------------------");
             Console.Write("입력 : ");
 
@@ -265,17 +265,21 @@ namespace TextRPG
                     data.scene = Scene.Confirm;
                     break;
                 default:
-                    data.scene = Scene.Confirm;
+                    data.scene = Scene.Select;
                     break;
             }
         }
+        #endregion
 
+        #region Intro
         static void IntroScene()
         {
             PrintIntro();
             GetMonsterInformation();
             data.scene = Scene.Street;
         }
+        #endregion
+
         static void StreetScene()
         {
             Console.Clear();
